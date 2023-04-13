@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Signin } from "../pages/Signin";
 import { Signup } from "../pages/Signup";
+import { Todo } from "../pages/Todo";
 
 export const Router = () => {
   const generalRoutesList = [
@@ -16,6 +17,10 @@ export const Router = () => {
     {
       path: "/signin",
       component: <Signin />,
+    },
+    {
+      path: "/todo",
+      component: <Todo />,
     },
   ];
   return (

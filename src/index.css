@@ -31,8 +31,14 @@ a {
 textarea:focus {
   outline: none;
 }
+button {
+  cursor: pointer;
+  border: 1px solid gainsboro;
+  background-color: transparent;
+}
 button:focus {
   outline: none;
+
 }
 input:focus {
   outline: none;
