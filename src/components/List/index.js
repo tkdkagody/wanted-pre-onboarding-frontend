@@ -52,6 +52,7 @@ export const List = ({
                 autoComplete="off"
                 value={editedInput}
                 onChange={changeTodotHandler}
+                data-testid="modify-input"
               />
             ) : (
               <Styles.TodoDiv>{editedInput}</Styles.TodoDiv>
@@ -61,10 +62,15 @@ export const List = ({
             {!isEdit ? (
               <Styles.Edit onClick={() => setIsEdit(true)}>수정</Styles.Edit>
             ) : (
-              <Styles.Edit onClick={clickUpdateBtn}>제출</Styles.Edit>
+              <Styles.Edit data-testid="submit-button" onClick={clickUpdateBtn}>
+                제출
+              </Styles.Edit>
             )}
 
-            <Styles.Delete onClick={() => clickDeleteBtn(todo.id)}>
+            <Styles.Delete
+              data-testid="cancel-button"
+              onClick={() => clickDeleteBtn(todo.id)}
+            >
               삭제
             </Styles.Delete>
           </Styles.BtnWrapper>
