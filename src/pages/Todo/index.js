@@ -1,8 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as Styles from "./styles";
 import { useRouter } from "../../utils/useRouter";
 import { getAccessTokenFromLocalStorage } from "../../utils/accessTokenHandler";
-import { createTodo, deleteTodo, getTodos } from "../../apis/todo";
+import {
+  createTodo,
+  deleteTodo,
+  getTodos,
+  updateCheckBoxTodos,
+  updateInputTodos,
+} from "../../apis/todo";
 import { List } from "../../components/List";
 
 export const Todo = () => {
@@ -12,6 +18,7 @@ export const Todo = () => {
   const [newTodo, setNewTodo] = useState("");
   const [todoList, setTodoList] = useState();
   const newTodoRef = useRef();
+  const [isReadyToEdit, setIsReadyToEdit] = useState(false);
 
   const changeInputHandler = (e) => {
     e.preventDefault();
@@ -41,13 +48,44 @@ export const Todo = () => {
     }
   };
 
-  const checkBoxHandler = (checkedId) => {
-    todoList.filter((todo) => {
-      return todo.id !== checkedId;
-    });
+  const updateInputTodo = async (checkedId) => {
+    console.log(checkedId);
+    // setIsReadyToEdit(true);
+    // const checkedTodo = todoList.filter((todo) => todo.id === checkedId)[0];
+    // const updateTodoRes = await updateCheckBoxTodos(
+    //   access_token,
+    //   checkedId,
+    //   checkedTodo
+    // );
+    // if (updateTodoRes === "success")
+    //   setTodoList(
+    //     todoList.map((todo) =>
+    //       todo.id === checkedId ? { ...todo, isCompleted: true } : todo
+    //     )
+    //   );
+    // getTodoHandler();
+  };
+
+  const checkBoxHandler = async (checkedId) => {
+    const checkedTodo = todoList.filter((todo) => todo.id === checkedId)[0];
+    const updateTodoRes = await updateCheckBoxTodos(
+      access_token,
+      checkedId,
+      checkedTodo
+    );
+
+    if (updateTodoRes === "success")
+      setTodoList(
+        todoList.map((todo) =>
+          todo.id === checkedId ? { ...todo, isCompleted: true } : todo
+        )
+      );
+
+    getTodoHandler();
   };
 
   useEffect(() => {
+    if (!access_token) routeTo("/signin");
     getTodoHandler();
     newTodoRef.current.focus();
   }, []);
@@ -91,6 +129,7 @@ export const Todo = () => {
                 key={todo.id}
                 todo={todo}
                 idx={idx}
+                updateInputTodo={updateInputTodo}
                 checkBoxHandler={checkBoxHandler}
                 deleteTodoHandler={deleteTodoHandler}
                 getTodoHandler={getTodoHandler}

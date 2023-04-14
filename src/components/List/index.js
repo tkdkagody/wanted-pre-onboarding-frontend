@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { updateInputTodos } from "../../apis/todo";
+import { getAccessTokenFromLocalStorage } from "../../utils/accessTokenHandler";
 import * as Styles from "./styles";
 
 export const List = ({
@@ -8,6 +10,30 @@ export const List = ({
   deleteTodoHandler,
   getTodoHandler,
 }) => {
+  const access_token = getAccessTokenFromLocalStorage();
+  const [editedInput, setEditedInput] = useState(todo.todo);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const changeTodotHandler = (e) => {
+    e.preventDefault();
+    setEditedInput(e.target.value);
+  };
+
+  const clickDeleteBtn = (id) => {
+    deleteTodoHandler(id);
+  };
+
+  const clickUpdateBtn = async () => {
+    const updateInputTodoRes = await updateInputTodos(
+      access_token,
+      todo.id,
+      editedInput,
+      todo
+    );
+    if (updateInputTodoRes === "success") setIsEdit(false);
+    getTodoHandler();
+  };
+
   return (
     <>
       {todo && (
@@ -17,16 +43,28 @@ export const List = ({
             <Styles.CheckBox
               type={"checkbox"}
               checked={todo.isCompleted}
-              // onChange={() => check(todo.id)}
-              onChange={checkBoxHandler}
+              onChange={() => checkBoxHandler(todo.id)}
               data-testid="new-todo-input"
             />
-            <Styles.TodoDiv>{todo.todo}</Styles.TodoDiv>
-            {/* <Styles.TodoInput type={"text"} /> */}
+            {isEdit ? (
+              <Styles.TodoInput
+                type={"text"}
+                autoComplete="off"
+                value={editedInput}
+                onChange={changeTodotHandler}
+              />
+            ) : (
+              <Styles.TodoDiv>{editedInput}</Styles.TodoDiv>
+            )}
           </Styles.InputWrapper>
           <Styles.BtnWrapper>
-            <Styles.Edit>수정</Styles.Edit>
-            <Styles.Delete onClick={() => deleteTodoHandler(todo.id)}>
+            {!isEdit ? (
+              <Styles.Edit onClick={() => setIsEdit(true)}>수정</Styles.Edit>
+            ) : (
+              <Styles.Edit onClick={clickUpdateBtn}>제출</Styles.Edit>
+            )}
+
+            <Styles.Delete onClick={() => clickDeleteBtn(todo.id)}>
               삭제
             </Styles.Delete>
           </Styles.BtnWrapper>

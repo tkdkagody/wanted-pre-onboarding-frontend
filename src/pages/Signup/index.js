@@ -72,6 +72,7 @@ export const Signup = () => {
   return (
     <Styles.Container>
       <Styles.SignupWrapper>
+        {" "}
         <Styles.MainTitle>SIGN UP</Styles.MainTitle>
         <Styles.InputBox>
           <Styles.Title>Email</Styles.Title>
@@ -94,7 +95,7 @@ export const Signup = () => {
         {errormessage}
         <Styles.SignupBtn
           data-testid="signup-button"
-          // disabled={isEmailValid && isPasswordValid}
+          disabled={!isEmailValid && !isPasswordValid}
           onClick={signupSubmitHandler}
         >
           Sign Up

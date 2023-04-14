@@ -17,7 +17,6 @@ export const createTodo = async (newTodo, access_token) => {
       : "create fail";
   } catch (err) {
     console.log(err);
-    alert("fail");
     return "create fail";
   }
 };
@@ -38,7 +37,6 @@ export const getTodos = async (token) => {
       : "get fail";
   } catch (err) {
     console.log(err);
-    alert("fail");
     return "get fail";
   }
 };
@@ -61,5 +59,53 @@ export const deleteTodo = async (token, id) => {
     console.log(err);
     alert("fail");
     return "delete fail";
+  }
+};
+
+export const updateCheckBoxTodos = async (token, checkedId, checkedTodo) => {
+  try {
+    const updateCheckBoxTodosRes = await axios.put(
+      `${process.env.REACT_APP_BASE_URL}/todos/${checkedId}`,
+      {
+        todo: checkedTodo.todo,
+        isCompleted: !checkedTodo.isCompleted,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return updateCheckBoxTodosRes.status === 200 ? "success" : "fail";
+  } catch (err) {
+    console.log(err);
+    return "update fail";
+  }
+};
+
+export const updateInputTodos = async (
+  token,
+  checkedId,
+  editedInput,
+  checkedTodo
+) => {
+  console.log(checkedId, editedInput, editedInput, checkedTodo);
+  try {
+    const updateInputTodos = await axios.put(
+      `${process.env.REACT_APP_BASE_URL}/todos/${checkedId}`,
+      {
+        todo: editedInput,
+        isCompleted: checkedTodo.isCompleted,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return updateInputTodos.status === 200 ? "success" : "fail";
+  } catch (err) {
+    console.log(err);
+    return "update fail";
   }
 };

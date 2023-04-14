@@ -60,10 +60,9 @@ export const Signin = () => {
         {errormessage}
         <Styles.SignupBtn
           data-testid="signin-button"
-          // disabled={isEmailValid && isPasswordValid}
           onClick={signupSubmitHandler}
         >
-          Sign Up
+          Sign In
         </Styles.SignupBtn>
       </Styles.SignupWrapper>
     </Styles.Container>

@@ -10,6 +10,7 @@ export const Container = styled.div`
 `;
 
 export const ListWrapper = styled.div`
+  margin-top: 88px;
   padding: 2rem 2rem;
   width: 50rem;
   height: auto;

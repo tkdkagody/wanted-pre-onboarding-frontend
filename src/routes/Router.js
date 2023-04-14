@@ -1,8 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { ErrorPage } from "../pages/ErrorPage";
+import { Navbar } from "../pages/Navbar";
 import { Signin } from "../pages/Signin";
 import { Signup } from "../pages/Signup";
 import { Todo } from "../pages/Todo";
+import { useRouter } from "../utils/useRouter";
 
 export const Router = () => {
   const generalRoutesList = [
@@ -24,10 +27,19 @@ export const Router = () => {
     },
   ];
   return (
-    <Routes>
-      {generalRoutesList.map((route, index) => (
-        <Route key={index} exact path={route.path} element={route.component} />
-      ))}
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        {generalRoutesList.map((route, index) => (
+          <Route
+            key={index}
+            exact
+            path={route.path}
+            element={route.component}
+          />
+        ))}
+        <Route exact path="/error/:statusCode" element={<ErrorPage />} />
+      </Routes>
+    </>
   );
 };
