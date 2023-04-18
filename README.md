@@ -14,4 +14,4 @@ $ npm start
  
 - 데모영상.gif
 
-![ezgif com-crop](https://user-images.githubusercontent.com/80307779/232681548-05f2e67b-58d1-4757-8c5d-bd07bf02299a.gif)
+![wanted-pre-internship-유다희_AdobeExpress](https://user-images.githubusercontent.com/80307779/232682817-a1bf4d93-ea00-4aa9-9345-be097166869d.gif)
