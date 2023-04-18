@@ -13,4 +13,9 @@ $ npm start
 
 - 데모영상.gif
 
-<img src="https://user-images.githubusercontent.com/80307779/232683281-c3130714-5112-4ace-b8ae-63a02a55eb3d.gif" width="80%">
+
+
+
+<img src="https://user-images.githubusercontent.com/80307779/232685829-6b6511a3-a051-42d5-8e56-ef96625c8bc8.gif" width="60%">
+
+
